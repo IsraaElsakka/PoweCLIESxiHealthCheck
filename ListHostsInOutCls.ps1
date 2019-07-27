@@ -24,5 +24,3 @@ else {
 Write-Output "All Hosts are in Cluster"}
 }
 }
-
-
