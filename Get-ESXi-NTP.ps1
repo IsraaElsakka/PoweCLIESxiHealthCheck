@@ -1,0 +1,2 @@
+Connect-VIServer -Server vCenter -User User -Password Password 
+Get-VMHost | Select @{Name="ESXiHost";Expression={$_.Name}},@{Name='NTP Service Running';Expression={Get-VMHostService -VMHost $_ | where{$_.Key -eq 'ntpd'} | select -ExpandProperty Running}},@{Name='DNS Server(s)';Expression={$_.Extensiondata.Config.Network.DnsConfig.Address -join ' | '}},@{Name='Time';Expression={(Get-View -Id $_.ExtensionData.ConfigManager.DatetimeSystem).QueryDateTime()}},@{Name="Timezone";Expression={(Get-VMHostAvailableTimeZone -VMHost $_.Name).Description}} | Sort-Object ESXiHost | ft
