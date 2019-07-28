@@ -1,0 +1,2 @@
+Connect-VIServer -Server vCenter -User User -Password Password 
+Get-VM | Get-HardDisk -DiskType "RawPhysical","RawVirtual" | Select-Object @{Name="VMName";expression={$_.Parent}},@{Name="PowerState";expression={(Get-VM -Name $_.Parent).PowerState}},@{Name="HardDisk";expression={$_.Name}},@{Name="DiskType";expression={$_.DiskType}},CapacityGB,@{Name="ESXiHost";expression={((Get-VM -Name $_.Parent) | Get-VMHost).Name}} | Sort-Object ESXiName | ft
